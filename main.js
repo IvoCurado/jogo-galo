@@ -88,7 +88,12 @@ const gameBoardController = (function () {
     result = checkIfLineIsWinner([cells[0][2], cells[1][1], cells[2][0]]);
     if (result) return true;
     //Check vertical combinations
-    // TO implement
+    result = checkIfLineIsWinner([cells[0][0], cells[1][0], cells[2][0]]);
+    if (result) return true;
+    result = checkIfLineIsWinner([cells[0][1], cells[1][1], cells[2][1]]);
+    if (result) return true;
+    result = checkIfLineIsWinner([cells[0][2], cells[1][2], cells[2][2]]);
+    if (result) return true;
     //Check horizontal combinations
     for (let i = 0; i < 3; i++) {
       let [a, b, c] = cells[i];
@@ -109,9 +114,9 @@ const gameBoardController = (function () {
   return { playByCurrentUser, resetGame };
 })();
 
-// gameBoardController.playByCurrentUser(0, 0);
-// gameBoardController.playByCurrentUser(1, 1);
-// gameBoardController.playByCurrentUser(0, 2);
-// gameBoardController.playByCurrentUser(0, 1);
-// gameBoardController.playByCurrentUser(0, 2);
-// gameBoardController.playByCurrentUser(2, 1);
+gameBoardController.playByCurrentUser(0, 0);
+gameBoardController.playByCurrentUser(1, 1);
+gameBoardController.playByCurrentUser(0, 2);
+gameBoardController.playByCurrentUser(0, 1);
+gameBoardController.playByCurrentUser(0, 2);
+gameBoardController.playByCurrentUser(2, 1);

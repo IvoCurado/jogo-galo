@@ -46,9 +46,16 @@ const gameboard = (function () {
 
 const gameBoardController = (function () {
   let currentPlayer = gameboard.player1;
+  const placardDialog = document.getElementById("result-dialog");
+  const restartButton = document.getElementById("restart-game-button");
+  const placardMessage = document.getElementById("result-banner");
+  const currentPlayerDisplay = document.getElementsByClassName(
+    "current-player-display"
+  )[0];
 
   const resetGame = () => {
     currentPlayer = gameboard.player1;
+    showCurrentPlayer();
     gameboard.resetGameCells();
   };
 
@@ -57,9 +64,16 @@ const gameBoardController = (function () {
       currentPlayer === gameboard.player1
         ? gameboard.player2
         : gameboard.player1;
+    showCurrentPlayer();
   };
 
-  const playByCurrentUser = (i, j) => {
+  const showCurrentPlayer = () => {
+    currentPlayerDisplay.textContent = `It's your turn: ${currentPlayer.name}`;
+  };
+  showCurrentPlayer();
+
+  const playByCurrentUser = (i, j, currentZone) => {
+    currentZone.textContent = currentPlayer.token;
     gameboard.updateGame(i, j, currentPlayer.token);
     let wasThisAWinnerMove = checkIfCurrentGameBoardHasWinner();
     if (wasThisAWinnerMove) {
@@ -74,10 +88,15 @@ const gameBoardController = (function () {
   };
 
   const showResultMessage = (winner) => {
-    console.log(
-      winner ? `Congrats to the winner: ${winner.name}` : "It was a tie"
-    );
-    console.log(gameboard.gameCells);
+    placardDialog.showModal();
+    restartButton.addEventListener("click", () => {
+      placardDialog.close();
+      resetGame();
+      uiController.resetUi();
+    });
+    placardMessage.textContent = winner
+      ? `Congrats to the winner: ${winner.name}`
+      : "It was a tie";
   };
 
   const checkIfCurrentGameBoardHasWinner = () => {
@@ -95,11 +114,12 @@ const gameBoardController = (function () {
     result = checkIfLineIsWinner([cells[0][2], cells[1][2], cells[2][2]]);
     if (result) return true;
     //Check horizontal combinations
-    for (let i = 0; i < 3; i++) {
-      let [a, b, c] = cells[i];
-      checkIfLineIsWinner(cells[i]);
-      if (result) return true;
-    }
+    result = checkIfLineIsWinner([cells[0][0], cells[0][1], cells[0][2]]);
+    if (result) return true;
+    result = checkIfLineIsWinner([cells[1][0], cells[1][1], cells[1][2]]);
+    if (result) return true;
+    result = checkIfLineIsWinner([cells[2][0], cells[2][1], cells[2][2]]);
+    if (result) return true;
     return false;
   };
 
@@ -111,12 +131,35 @@ const gameBoardController = (function () {
     return false;
   };
 
-  return { playByCurrentUser, resetGame };
+  return { playByCurrentUser, resetGame, currentPlayer };
 })();
 
-gameBoardController.playByCurrentUser(0, 0);
-gameBoardController.playByCurrentUser(1, 1);
-gameBoardController.playByCurrentUser(0, 2);
-gameBoardController.playByCurrentUser(0, 1);
-gameBoardController.playByCurrentUser(0, 2);
-gameBoardController.playByCurrentUser(2, 1);
+const uiController = (function () {
+  const populateUiZonesWithBehavior = () => {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        let currentZone = document.getElementById(`zone-${i}-${j}`);
+        currentZone.addEventListener("click", (_) => {
+          if (
+            currentZone.textContent !== "x" &&
+            currentZone.textContent !== "o"
+          ) {
+            gameBoardController.playByCurrentUser(i, j, currentZone);
+          }
+        });
+      }
+    }
+  };
+
+  const resetUi = () => {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        let currentZone = document.getElementById(`zone-${i}-${j}`);
+        currentZone.textContent = " ";
+      }
+    }
+  };
+  populateUiZonesWithBehavior();
+
+  return { resetUi };
+})();

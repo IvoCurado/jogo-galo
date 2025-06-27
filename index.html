@@ -2,23 +2,30 @@
 <html>
   <head>
     <link rel="stylesheet" href="./styles.css" />
-    <script src="./main.js"></script>
+    <script src="./main.js" defer></script>
     <title>Jogo do Galo</title>
   </head>
   <body>
     <div class="title-section"><h1>Jogo do Galo</h1></div>
     <div class="jogo-section">
       <div class="grid-section">
-        <div class="zone" data-i="0" data-j="0"></div>
-        <div class="zone" data-i="0" data-j="1"></div>
-        <div class="zone" data-i="0" data-j="2"></div>
-        <div class="zone" data-i="1" data-j="0"></div>
-        <div class="zone" data-i="1" data-j="1"></div>
-        <div class="zone" data-i="1" data-j="2"></div>
-        <div class="zone" data-i="2" data-j="0"></div>
-        <div class="zone" data-i="2" data-j="1"></div>
-        <div class="zone" data-i="2" data-j="2"></div>
+        <div id="zone-0-0" class="zone"></div>
+        <div id="zone-0-1" class="zone"></div>
+        <div id="zone-0-2" class="zone"></div>
+        <div id="zone-1-0" class="zone"></div>
+        <div id="zone-1-1" class="zone"></div>
+        <div id="zone-1-2" class="zone"></div>
+        <div id="zone-2-0" class="zone"></div>
+        <div id="zone-2-1" class="zone"></div>
+        <div id="zone-2-2" class="zone"></div>
       </div>
+      <div class="current-player-display"></div>
     </div>
+    <dialog id="result-dialog">
+      <div class="dialog-content">
+        <p id="result-banner"></p>
+        <button id="restart-game-button">Restart Game</button>
+      </div>
+    </dialog>
   </body>
 </html>

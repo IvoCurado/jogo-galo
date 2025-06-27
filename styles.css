@@ -9,18 +9,20 @@ html {
 }
 
 :root {
-    --main-color: #1e57ac;
-    --main-color-light: #256dda;
-    --main-color-lighter: rgba(40, 120, 240, 0.644)da;
+  --main-color: #1e57ac;
+  --main-color-light: #256dda;
+  --main-color-lighter: rgba(40, 120, 240, 0.644) da;
 
-    --main-color-dark: #00327e;
-
+  --main-color-dark: #00327e;
 }
 
 .title-section,
 .jogo-section {
+  flex-direction: column;
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 
 .grid-section {
@@ -29,17 +31,20 @@ html {
   grid-template-rows: repeat(3, minmax(100px, 1fr));
   gap: 10px;
   .zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
     border-radius: 2px;
     border: 2px solid var(--main-color);
     box-shadow: 1px 1px 1px var(--main-color-lighter);
     padding: 20px;
     &:hover {
-        cursor: pointer;
-        background-color: var(--main-color-light);
+      cursor: pointer;
+      background-color: var(--main-color-light);
     }
     &:active {
-        background-color: var(--main-color-dark);
-
+      background-color: var(--main-color-dark);
     }
   }
 }

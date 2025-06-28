@@ -48,6 +48,13 @@ const gameBoardController = (function () {
   let currentPlayer = gameboard.player1;
   const placardDialog = document.getElementById("result-dialog");
   const restartButton = document.getElementById("restart-game-button");
+  const generalRestartButton = document.getElementById(
+    "general-restart-game-button"
+  );
+  generalRestartButton.addEventListener("click", () => {
+    resetGame();
+    uiController.resetUi();
+  });
   const placardMessage = document.getElementById("result-banner");
   const currentPlayerDisplay = document.getElementsByClassName(
     "current-player-display"
